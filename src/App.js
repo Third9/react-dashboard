@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, Link, createHashHistory, IndexRoute} from 'react-router';
+import {Router, Route, Link, hashHistory, IndexRoute} from 'react-router';
 
 import Header from './components/layouts/Header';
 import Toolbar from './components/layouts/Toolbar';
@@ -24,7 +24,7 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
-  <Router history={createHashHistory}>
+  <Router history={hashHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
       <Route path="home" component={Home} />
