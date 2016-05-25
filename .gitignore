@@ -1,0 +1,6 @@
+#file
+*.log
+*.zip
+
+#dir
+/node_modules
