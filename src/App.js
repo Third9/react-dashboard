@@ -2,19 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, Link, createHashHistory, IndexRoute} from 'react-router';
 
+import Header from './components/layouts/Header';
+import Toolbar from './components/layouts/Toolbar';
 import {Home, Active, DetailPage, Total, Usim} from './components/pages';
 
 class App extends React.Component {
   render() {
     return (
       <div>
-        <ul>
-          <li><Link to="home">Home</Link></li>
-          <li><Link to="active">Active</Link></li>
-          <li><Link to="detail-page">DetailPage</Link></li>
-          <li><Link to="total">Total</Link></li>
-          <li><Link to="usim">Usim</Link></li>
-        </ul>
+        <Header />
+        <Toolbar />
         {this.props.children}
       </div>
     )

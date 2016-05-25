@@ -1,10 +1,19 @@
 import React from 'react';
+import {Link} from 'react-router';
+
+import {PageHeader} from 'react-bootstrap';
 
 class Header extends React.Component {
   render() {
-    return(
+    let PageTitle = "Dashboard";
+
+    return (
       <div>
-        <h2>Header</h2>
+        <PageHeader>
+          <Link to='/home'>
+            {PageTitle}
+          </Link>
+        </PageHeader>
       </div>
     )
   }
