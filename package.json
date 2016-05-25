@@ -32,6 +32,7 @@
     "react-datagrid": "^2.0.2",
     "react-dom": "^15.0.2",
     "react-router": "^2.4.0",
+    "sorty": "^1.2.2",
     "xlsx": "^0.8.0"
   }
 }
