@@ -8,8 +8,13 @@ import {Home, Active, DetailPage, Total, Usim} from './components/pages';
 
 class App extends React.Component {
   render() {
+    let divStyle = {
+        width: '99%',
+        margin: 'auto'
+    };
+
     return (
-      <div>
+      <div style={divStyle}>
         <Header />
         <Toolbar />
         {this.props.children}
