@@ -1,7 +1,7 @@
 {
-  "name": "react_rms2",
+  "name": "react_dashboard",
   "version": "1.0.0",
-  "description": "react rms2",
+  "description": "react dashboard",
   "main": "index.html",
   "scripts": {
     "start": "webpack-dev-server --hot --host 0.0.0.0"
