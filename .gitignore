@@ -1,6 +1,8 @@
 #file
 *.log
 *.zip
+app.js
+*.csv
 
 #dir
 /node_modules

@@ -4,8 +4,7 @@ import update from 'react-addons-update';
 import DataGrid from 'react-datagrid';
 import sorty from 'sorty';
 
-// import ExportFile from './ExportFile';
-// import ImportFile from './ImportFile';
+import {ExportFile} from './FileFunction';
 
 class Spreadsheet extends React.Component {
   constructor(props) {
@@ -99,7 +98,8 @@ class Spreadsheet extends React.Component {
   render() {
 		return (
       <div>
-        <link rel="stylesheet" type="text/css" href="http://zippyui.com/react-datagrid/index.css?2015-07-02b" />
+        <link rel="stylesheet" type="text/css" href="src/stylesheets/css/Spreadsheet.css" />
+        <ExportFile data={this.state._datas}/>
         <DataGrid
     			idProperty='id'
     			dataSource={this.state._datas}
