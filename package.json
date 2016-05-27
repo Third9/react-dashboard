@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "react dashboard",
   "main": "index.html",
+  "window": {
+    "toolbar": true,
+    "title": "DashBoard",
+    "min_width":800,
+    "min_height":600,
+    "show_in_taskbar": true
+  },
   "scripts": {
     "start": "webpack-dev-server --hot --host 0.0.0.0"
   },
