@@ -1,5 +1,8 @@
-let Home = require('./components/Home');
-exports.Home = Home['default'];
+let Main = require('./components/Main');
+exports.Main = Main['default'];
+
+let Dashboard = require('./components/Dashboard');
+exports.Dashboard = Dashboard['default'];
 
 let Active = require('./components/Active');
 exports.Active = Active['default'];
@@ -15,3 +18,11 @@ exports.Total = Total['default'];
 
 let Usim = require('./components/Usim');
 exports.Usim = Usim['default'];
+
+let {Login, requireAuth} = require('./components/Login');
+exports.Login = Login;
+exports.requireAuth = requireAuth;
+
+
+let {Logout} = require('./components/Login');
+exports.Logout = Logout;
