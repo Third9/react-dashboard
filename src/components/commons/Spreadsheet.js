@@ -98,7 +98,6 @@ class Spreadsheet extends React.Component {
   render() {
 		return (
       <div>
-        <link rel="stylesheet" type="text/css" href="src/stylesheets/css/Spreadsheet.css" />
         <ExportFile data={this.state._datas}/>
         <DataGrid
     			idProperty='id'

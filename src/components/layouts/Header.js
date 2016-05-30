@@ -3,6 +3,8 @@ import {Link} from 'react-router';
 
 import {PageHeader, Button} from 'react-bootstrap';
 
+import Toolbar from './Toolbar';
+
 class Header extends React.Component {
   constructor(props) {
       super(props);
@@ -38,6 +40,9 @@ class Header extends React.Component {
             )
           }
         </PageHeader>
+        {this.props.loggedIn ? (
+            <Toolbar />
+        ): null}
       </div>
     )
   }

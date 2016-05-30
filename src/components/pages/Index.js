@@ -18,11 +18,3 @@ exports.Total = Total['default'];
 
 let Usim = require('./components/Usim');
 exports.Usim = Usim['default'];
-
-let {Login, requireAuth} = require('./components/Login');
-exports.Login = Login;
-exports.requireAuth = requireAuth;
-
-
-let {Logout} = require('./components/Login');
-exports.Logout = Logout;

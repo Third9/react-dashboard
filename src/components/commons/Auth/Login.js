@@ -2,39 +2,24 @@ import React from 'react';
 
 import {withRouter} from 'react-router';
 
-import Auth from '../../commons/Auth';
+import {Auth} from './';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.getAuth = this.getAuth.bind(this);
-    this.updateAuth = this.updateAuth.bind(this);
+    // this.requireAuth = this.requireAuth.bind(this);
+    this.auth = this.props.Auth;
+    this.parent = this.props.parent;
 
     this.state = {
-      loggedIn: Auth.loggedIn()
+      loggedIn: this.auth.loggedIn(),
+      error: false
     };
 
       console.log(`loggedIn: ${this.state.loggedIn}`)
   };
-
-  updateAuth(loggedIn) {
-    this.setState({
-      loggedIn: loggedIn
-    })
-  };
-
-  getAuth() {
-    return this.state.loggedIn;
-  }
-
-  componentWillMount() {
-    Auth.onChange = this.updateAuth
-    Auth.login()
-  };
-
-
 
   handleSubmit(evt) {
     evt.preventDefault()
@@ -42,16 +27,16 @@ class Login extends React.Component {
     let email = this.refs.email.value
     let pass = this.refs.pass.value
 
-    Auth.login(email, pass, (loggedIn) => {
+    this.auth.login(email, pass, (loggedIn) => {
       if (!loggedIn)
         return this.setState({ loggedIn: true })
 
-      let { location } = this.props
+      let { location } = this.parent
 
       if (location.state && location.state.nextPathname) {
-        this.props.router.replace(location.state.nextPathname)
+        this.parent.router.replace(location.state.nextPathname)
       } else {
-        this.props.router.replace('/')
+        this.parent.router.replace('/')
       }
     })
   }
@@ -72,9 +57,17 @@ class Login extends React.Component {
   }
 }
 
-export class Logout extends React.Component {
+class Logout extends React.Component {
+  constructor(props) {
+      super(props);
+
+      this.auth = this.props.Auth;
+      this.parent = this.props.parent;
+  }
+
   componentDidMount() {
-    Auth.logout()
+    this.auth.logout()
+    this.parent.router.replace('/')
   };
 
   render() {
@@ -85,17 +78,6 @@ export class Logout extends React.Component {
     )
   }
 }
-
-// function requireAuth(nextState, replace) {
-//   if (!Auth.loggedIn()) {
-//     replace({
-//       pathname: '/login',
-//       state: { nextPathname: nextState.location.pathname }
-//     })
-//   }
-// }
-
-Login = withRouter(Login)
 
 function requireAuth(nextState, replace) {
   if (!Auth.loggedIn()) {
@@ -108,5 +90,6 @@ function requireAuth(nextState, replace) {
 
 module.exports = {
     Login,
-    requireAuth
+    requireAuth,
+    Logout
 }
