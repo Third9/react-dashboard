@@ -15,9 +15,11 @@ class Spreadsheet extends React.Component {
     this.handleSortChange = this.handleSortChange.bind(this);
     this.handleColumnOrderChange = this.handleColumnOrderChange.bind(this);
     this.handleFilter = this.handleFilter.bind(this);
+    this.onSelectionChange = this.onSelectionChange.bind(this);
 
     this.state = {
       _datas: this.insertData(),
+      selectedId: null,
       sortInfo: [{name:'firstName', dir:'asc'}],
       columns: [
         { name: 'index', title: '#', width: 50, type:'number' },
@@ -35,7 +37,7 @@ class Spreadsheet extends React.Component {
     for (let i=1; i<=10000; i++){
       datas.push({
         "index":i,
-        "firstName":"First"+i,
+        "firstName":<CellFunc idx={i} />,
         "lastName":"Last"+i,
         "city":"City"+i,
         "email":"Email"+i
@@ -95,23 +97,61 @@ class Spreadsheet extends React.Component {
     this.setState({})
   }
 
+  onSelectionChange(newSelectedId, data) {
+
+      if(this.state.selectedId == newSelectedId) {
+          newSelectedId = null
+      }
+
+      this.setState({
+        selectedId: newSelectedId
+      })
+
+      // name = newSelectedId != null? data.firstName: 'none'
+  }
+
   render() {
 		return (
       <div>
         <ExportFile data={this.state._datas}/>
-        <DataGrid
-    			idProperty='id'
-    			dataSource={this.state._datas}
-    			columns={this.state.columns}
-    			style={{height: 500}}
-          sortInfo={this.state.sortInfo}
-          onSortChange={this.handleSortChange}
-          onColumnOrderChange={this.handleColumnOrderChange}
-          onFilter={this.handleFilter}
-          liveFilter={true}
-		    />
+        <div >
+          <DataGrid
+      			idProperty='index'
+      			dataSource={this.state._datas}
+      			columns={this.state.columns}
+      			style={{height: 500}}
+            selected={this.state.selectedId}
+            onSelectionChange={this.onSelectionChange}
+            sortInfo={this.state.sortInfo}
+            onSortChange={this.handleSortChange}
+            onColumnOrderChange={this.handleColumnOrderChange}
+            onFilter={this.handleFilter}
+            liveFilter={true}
+  		    />
+        </div>
       </div>
     )
 	}}
 
 export default Spreadsheet;
+
+class CellFunc extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+      let idx = this.props.idx;
+      alert(`temp: ${idx}`)
+    }
+
+    render() {
+      return(
+        <div>
+          <button onClick={this.handleClick}>{this.props.idx}</button>
+        </div>
+      )
+    }
+}
