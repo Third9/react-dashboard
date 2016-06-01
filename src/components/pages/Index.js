@@ -1,6 +1,3 @@
-let Main = require('./components/Main');
-exports.Main = Main['default'];
-
 let Dashboard = require('./components/Dashboard');
 exports.Dashboard = Dashboard['default'];
 

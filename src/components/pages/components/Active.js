@@ -1,13 +1,13 @@
 import React from 'react';
 
-import Spreadsheet from '../../commons/Spreadsheet';
+import {DataSheet} from '../../commons/DataSheet/';
 
 class Active extends React.Component {
   render() {
     return(
       <div>
         <h2>Active</h2>
-        <Spreadsheet />
+        <DataSheet />
       </div>
     )
   }

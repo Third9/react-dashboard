@@ -4,9 +4,10 @@ import update from 'react-addons-update';
 import DataGrid from 'react-datagrid';
 import sorty from 'sorty';
 
-import {ExportFile} from './FileFunction';
+import {ExportFile} from '../FileFunction';
+import SelectedDetails from './SelectedDetails';
 
-class Spreadsheet extends React.Component {
+class DataSheet extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,7 +20,10 @@ class Spreadsheet extends React.Component {
 
     this.state = {
       _datas: this.insertData(),
+      width: '100%',
       selectedId: null,
+      showDetails: false,
+
       sortInfo: [{name:'firstName', dir:'asc'}],
       columns: [
         { name: 'index', title: '#', width: 50, type:'number' },
@@ -28,7 +32,7 @@ class Spreadsheet extends React.Component {
         { name: 'city' },
         { name: 'email' }
       ]
-    }
+    };
   }
 
   // 데이터 추가를 위한 용도. test
@@ -98,28 +102,34 @@ class Spreadsheet extends React.Component {
   }
 
   onSelectionChange(newSelectedId, data) {
+    let newShowDetails = true;
+    let newWidth = '60%';
 
-      if(this.state.selectedId == newSelectedId) {
-          newSelectedId = null
-      }
+    if(this.state.selectedId == newSelectedId) {
+        newSelectedId = null;
+        newShowDetails = false;
+        newWidth = '100%';
+    }
 
-      this.setState({
-        selectedId: newSelectedId
-      })
+    this.setState({
+      selectedId: newSelectedId,
+      showDetails: newShowDetails,
+      width: newWidth
+    })
 
-      // name = newSelectedId != null? data.firstName: 'none'
+    // name = newSelectedId != null? data.firstName: 'none'
   }
 
   render() {
 		return (
       <div>
         <ExportFile data={this.state._datas}/>
-        <div >
+        <div style={{display: '-webkit-box'}}>
           <DataGrid
       			idProperty='index'
       			dataSource={this.state._datas}
       			columns={this.state.columns}
-      			style={{height: 500}}
+      			style={{height: 500, width: this.state.width}}
             selected={this.state.selectedId}
             onSelectionChange={this.onSelectionChange}
             sortInfo={this.state.sortInfo}
@@ -128,12 +138,13 @@ class Spreadsheet extends React.Component {
             onFilter={this.handleFilter}
             liveFilter={true}
   		    />
+        {this.state.showDetails ? <SelectedDetails idx={this.state.selectedId}/> : null}
         </div>
       </div>
     )
 	}}
 
-export default Spreadsheet;
+export default DataSheet;
 
 class CellFunc extends React.Component {
     constructor(props) {
