@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Grid, Row, Col} from 'react-bootstrap';
+import {Grid, Row, Col, FormGroup, ControlLabel, FormControl, ButtonToolbar, Button} from 'react-bootstrap';
 import {LineChart} from '../Charts'
 
 class SelectedDetails extends React.Component {
@@ -60,8 +60,24 @@ class SelectedDetails extends React.Component {
             <Col sm={3} md={3} style={styleCol} >2</Col>
           </Row>
         </Grid>
-        <div className="col-xs-10 col-md-7">
-          <LineChart  data={this.state.lineData} />
+        <div className="row">
+          <div className="col-xs-10 col-md-7">
+            <LineChart  data={this.state.lineData} />
+          </div>
+        </div>
+        <div className="row">
+          <FormGroup controlId="formControlsTextarea">
+            <ControlLabel>Textarea</ControlLabel>
+            <FormControl componentClass="textarea" placeholder="textarea" />
+          </FormGroup>
+        </div>
+        <div className="row">
+          <ButtonToolbar>
+            <Button>Button1</Button>
+            <Button>Button2</Button>
+            <Button>Button3</Button>
+            <Button>Button4</Button>
+          </ButtonToolbar>
         </div>
       </div>
     )

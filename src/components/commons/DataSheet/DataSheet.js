@@ -123,7 +123,6 @@ class DataSheet extends React.Component {
   render() {
 		return (
       <div>
-        <ExportFile data={this.state._datas}/>
         <div style={{display: '-webkit-box'}}>
           <DataGrid
       			idProperty='index'
@@ -140,6 +139,7 @@ class DataSheet extends React.Component {
   		    />
         {this.state.showDetails ? <SelectedDetails idx={this.state.selectedId}/> : null}
         </div>
+        <ExportFile data={this.state._datas}/>
       </div>
     )
 	}}

@@ -3,6 +3,7 @@ import fs from 'fs';
 
 // import json2xls from 'json2xls'; // 해당 모듈은 xlsx로만 출력
 import json2csv from 'json2csv';
+import XLSX from 'xlsx';
 import {Button, Modal, FormControl} from 'react-bootstrap';
 
 export class ExportFile extends React.Component {
@@ -17,26 +18,26 @@ export class ExportFile extends React.Component {
     this.state = {
       showModal: false,
       fileName: ''
-    }
+    };
   }
 
   onShowModal() {
     this.setState({
       showModal: true
-    })
-  };
+    });
+  }
 
   onCloseModal() {
       this.setState({
         showModal: false
-      })
-  };
+      });
+  }
 
   onChangeFileName(evt) {
     let nextState = {};
     nextState[evt.target.name] = evt.target.value;
     this.setState(nextState);
-  };
+  }
 
   exportXLS() {
     let gridDatas = this.props.data;
@@ -62,7 +63,7 @@ export class ExportFile extends React.Component {
           });
       }
     });
-  };
+  }
 
   render() {
 
@@ -92,5 +93,66 @@ export class ExportFile extends React.Component {
         </Modal>
       </div>
     );
+  }
+}
+
+export class ImportFile extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.importXLS = this.importXLS.bind(this);
+    this.state = {
+      loadFile: ""
+    }
+  }
+
+  importXLS(evt) {
+    let file = evt.target.files;
+    let i, f;
+    for (i = 0, f = file[i]; i != file.length; ++i) {
+      let reader = new FileReader();
+      let name = f.name;
+      reader.onload = function(e) {
+        let datas = e.target.result;
+
+        let workbook = XLSX.read(datas, {type: 'binary'});
+
+        /* DO SOMETHING WITH workbook HERE */
+        console.log(workbook)
+        /*
+        정상적인 엑셀 파일의 경우 workbook으로 데이터 전달이 됨.
+        사용할 내용들은 시트네임, 시트내용들
+        SheetNames : 시트명
+        Sheets: 시트의 내용들
+        */
+        var sheetNameList = workbook.SheetNames;
+        sheetNameList.forEach(function(sheetName) {
+      		var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+      		if(roa.length > 0){
+      			console.log(roa);
+            
+      		}
+      	});
+
+
+        // sheetNameList.forEach(function(sheetName) { /* iterate through sheets */
+        //   var worksheet = workbook.Sheets[sheetName];
+        //   for (z in worksheet) {
+        //     /* all keys that do not begin with "!" correspond to cell addresses */
+        //     if(z[0] === '!') continue;
+        //     console.log(y + "!" + z + "=" + JSON.stringify(worksheet[z].v));
+        //   }
+        // });
+      };
+      reader.readAsBinaryString(f);
+    }
+  }
+
+  render() {
+    return(
+      <div>
+        <input type='file' onChange={this.importXLS} />
+      </div>
+    )
   }
 }

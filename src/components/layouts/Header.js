@@ -15,13 +15,17 @@ class Header extends React.Component {
   }
 
   render() {
-    let buttonStyle={
+    let headerStyle = {
+      height: '50px'
+    }
+
+    let buttonStyle = {
       marginLeft: '85%'
     }
 
     return (
       <div>
-        <PageHeader>
+        <PageHeader style={headerStyle}>
           <Link to='/main'>
             {this.state.pageTitle}
           </Link>
