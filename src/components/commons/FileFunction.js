@@ -100,58 +100,127 @@ export class ImportFile extends React.Component {
   constructor(props) {
     super(props);
 
-    this.importXLS = this.importXLS.bind(this);
+    this.loadDatas = this.loadDatas.bind(this);
+    this._toJSON = this._toJSON.bind(this);
+
     this.state = {
-      loadFile: ""
+      loadData: null
     }
   }
 
-  importXLS(evt) {
+  // importXLS(evt) {
+  //   // let file = evt.target.files;
+  //   // let i, f;
+  //   // let jsonData = null;
+  //
+  //   for (i = 0, f = file[i]; i != file.length; ++i) {
+  //     let reader = new FileReader();
+  //     let name = f.name;
+  //     reader.onload = ((evt)=>{
+  //       let datas = evt.target.result;
+  //       let workbook = XLSX.read(datas, {type: 'binary'});
+  //
+  //       /* DO SOMETHING WITH workbook HERE */
+  //       console.log(workbook)
+  //       /*
+  //       정상적인 엑셀 파일의 경우 workbook으로 데이터 전달이 됨.
+  //       사용할 내용들은 시트네임, 시트내용들
+  //       SheetNames : 시트명
+  //       Sheets: 시트의 내용들
+  //       */
+  //       let sheetNameList = workbook.SheetNames;
+  //       sheetNameList.forEach((sheetName)=>{
+  //     		jsonData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+  //     		if(jsonData.length > 0){
+  //     			console.log(jsonData);
+  //           this.setState({
+  //             loadData: jsonData
+  //           });
+  //           console.log(`loadData : ${this.state.loadData}`)
+  //           this.props.onLoadXLSX(this.state.loadData)
+  //           // this.props.onLoadXLSX(roa)
+  //           // return roa
+  //     		}
+  //         // this.onLoadXLSX(roa);
+  //     	});
+  //     });
+  //     reader.readAsBinaryString(f);
+  //   }
+  // }
+
+  loadDatas(evt) {
     let file = evt.target.files;
     let i, f;
+
     for (i = 0, f = file[i]; i != file.length; ++i) {
       let reader = new FileReader();
       let name = f.name;
-      reader.onload = function(e) {
-        let datas = e.target.result;
 
+      reader.readAsBinaryString(f);
+
+      reader.onload = ((evt)=>{
+        let datas = evt.target.result;
         let workbook = XLSX.read(datas, {type: 'binary'});
 
+        this._toJSON(workbook);
         /* DO SOMETHING WITH workbook HERE */
-        console.log(workbook)
+        // console.log(workbook)
         /*
         정상적인 엑셀 파일의 경우 workbook으로 데이터 전달이 됨.
         사용할 내용들은 시트네임, 시트내용들
         SheetNames : 시트명
         Sheets: 시트의 내용들
         */
-        var sheetNameList = workbook.SheetNames;
-        sheetNameList.forEach(function(sheetName) {
-      		var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-      		if(roa.length > 0){
-      			console.log(roa);
-            
-      		}
-      	});
+        // let sheetNameList = workbook.SheetNames;
+        // sheetNameList.forEach((sheetName)=>{
+      	// 	jsonData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+      	// 	if(jsonData.length > 0){
+      	// 		console.log(jsonData);
+        //     // this.setState({
+        //     //   loadData: jsonData
+        //     // });
+        //     // console.log(`loadData : ${this.state.loadData}`)
+        //     // this.props.onLoadXLSX(this.state.loadData)
+        //     // this.props.onLoadXLSX(roa)
+        //     // return roa
+      	// 	}
+        //   // this.onLoadXLSX(roa);
+      	// });
+      });
 
-
-        // sheetNameList.forEach(function(sheetName) { /* iterate through sheets */
-        //   var worksheet = workbook.Sheets[sheetName];
-        //   for (z in worksheet) {
-        //     /* all keys that do not begin with "!" correspond to cell addresses */
-        //     if(z[0] === '!') continue;
-        //     console.log(y + "!" + z + "=" + JSON.stringify(worksheet[z].v));
-        //   }
-        // });
-      };
-      reader.readAsBinaryString(f);
     }
+  }
+
+  _toJSON(workbook) {
+    let sheetNameList = workbook.SheetNames;
+    let jsonData = null;
+    let output = '';
+
+    sheetNameList.forEach((sheetName)=>{
+      jsonData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+      if(jsonData.length > 0){
+        // console.log(`jsonData: ${jsonData}`);
+
+        output = JSON.stringify(jsonData, 2, 2)
+        // console.log(`output: ${output}`);
+
+        this.props.onLoadXLSX(output);
+        // this.setState({
+        //   loadData: jsonData
+        // });
+        // console.log(`loadData : ${this.state.loadData}`)
+        // this.props.onLoadXLSX(this.state.loadData)
+        // this.props.onLoadXLSX(roa)
+        // return roa
+      }
+      // this.onLoadXLSX(roa);
+    });
   }
 
   render() {
     return(
       <div>
-        <input type='file' onChange={this.importXLS} />
+        <input type='file' onChange={this.loadDatas} />
       </div>
     )
   }

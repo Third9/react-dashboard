@@ -52,6 +52,7 @@ class wrapperLogout extends React.Component {
 // wrapperLogout에서 Router 객체를 사용하기 위한 선언
 wrapperLogout = withRouter(wrapperLogout);
 
+
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App}>
