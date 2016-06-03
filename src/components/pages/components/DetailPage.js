@@ -19,21 +19,19 @@ class DetailPage1 extends React.Component {
           { name: 'email' }
         ],
         sortInfo: [{name:'firstName', dir:'asc'}],
-        dataSource: null,
-        jsonData: ''
+        dataSource: []
       }
   }
 
   onLoadXLSX(value) {
     this.setState({
-      jsonData: value,
       dataSource: eval(value)
     });
 
   }
 
   insertData() {
-    let datas = []
+    let datas = [];
     for (let i=1; i<=10000; i++){
       datas.push({
         "index":i,
@@ -43,11 +41,7 @@ class DetailPage1 extends React.Component {
         "email":"Email"+i
       })
     }
-    return datas
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-      console.log("In")
+    return datas;
   }
 
   render() {
@@ -57,13 +51,10 @@ class DetailPage1 extends React.Component {
         {this.state.dataSource ? <DataSheet sortInfo={this.state.sortInfo}
                    columns={this.state.columns}
                    dataSource={this.state.dataSource}
+                   detailView={false}
                   />
                 : null}
-
         <ImportFile data={this.state.dataSource} onLoadXLSX={this.onLoadXLSX} />
-        <div>
-          output: {this.state.jsonData}
-        </div>
       </div>
     )
   }

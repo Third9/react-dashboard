@@ -8,6 +8,7 @@ class Active extends React.Component {
       super(props);
 
       this.insertData = this.insertData.bind(this);
+      this.handleCellFunc = this.handleCellFunc.bind(this);
 
       this.state = {
         columns: [
@@ -28,10 +29,10 @@ class Active extends React.Component {
     for (let i=1; i<=10000; i++){
       datas.push({
         "index":i,
-        "firstName":<CellFunc idx={i} />,
-        "lastName":"Last"+i,
-        "city":"City"+i,
-        "email":"Email"+i
+        "firstName":`First${i}`,
+        "lastName":`Last${i}`,
+        "city":`City${i}`,
+        "email":`Email${i}`
       })
     }
 
@@ -50,13 +51,19 @@ class Active extends React.Component {
     //  this.setState(newData);
   }
 
+  handleCellFunc(val) {
+      alert(val)
+  }
+
   render() {
     return(
       <div>
         <h2>Active</h2>
-        <DataSheet sortInfo={this.state.sortInfo}
+        <DataSheet onCellFunc={this.handleCellFunc}
+                   sortInfo={this.state.sortInfo}
                    columns={this.state.columns}
                    dataSource={this.state.dataSource}
+                   detailView={true}
         />
         <ExportFile data={this.state.dataSource}/>
       </div>
@@ -65,24 +72,3 @@ class Active extends React.Component {
 }
 
 export default Active;
-
-class CellFunc extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick() {
-      let idx = this.props.idx;
-      alert(`temp: ${idx}`)
-    }
-
-    render() {
-      return(
-        <div>
-          <button onClick={this.handleClick}>{this.props.idx}</button>
-        </div>
-      )
-    }
-}

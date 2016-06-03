@@ -6,8 +6,8 @@
   "window": {
     "toolbar": true,
     "title": "DashBoard",
-    "min_width":800,
-    "min_height":600,
+    "min_width": 800,
+    "min_height": 600,
     "show_in_taskbar": true
   },
   "scripts": {
@@ -40,6 +40,7 @@
     "react-dom": "^15.0.2",
     "react-router": "^2.4.0",
     "sorty": "^1.2.2",
+    "underscore": "^1.8.3",
     "xlsx": "^0.8.0"
   }
 }
