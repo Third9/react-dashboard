@@ -7,29 +7,29 @@ import StatTile from '../external_modules/react-adminLTE/widgets/js/components/w
 
 class Toolbar extends React.Component {
   render() {
-
     return (
       <div className="row">
             <StatTile key={"rowThree1"}
                       width = {3}
                       icon = {'fa-shopping-cart'}
-                      link = {'#/main/active'}
+                      link = {'#/main/total'}
                       stats = {'150'}
-                      subject = {'Active'}
-                      theme = {'bg-aqua'} />
+                      subject = {'Total'}
+                      theme = {'bg-aqua'}
+                      />
             <StatTile key={"rowThree2"}
                       width = {3}
                       icon = {'ion-stats-bars'}
-                      link = {'#/main/detail-page'}
+                      link = {'#/main/active'}
                       stats = {'23'}
-                      subject = {'DetailPage'}
+                      subject = {'Active'}
                       theme = {'bg-green'} />
             <StatTile key={"rowThree3"}
                       width = {3}
                       icon = {'ion-person-add'}
-                      link = {'#/main/total'}
+                      link = {'#/main/inactive'}
                       stats = {'584'}
-                      subject = {'Total'}
+                      subject = {'Inactive'}
                       theme = {'bg-yellow'} />
             <StatTile key={"rowThree4"}
                       width = {3}

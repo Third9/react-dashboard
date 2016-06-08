@@ -1,10 +1,13 @@
 import React from 'react';
 
+import ScrollArea from 'react-scrollbar';
 import {LineChart, InfoBarChart, ProgressChart} from '../../commons/Charts';
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+
+    this.handleScroll = this.handleScroll.bind(this);
 
     this.state = {
       lineData: {
@@ -30,6 +33,10 @@ class Dashboard extends React.Component {
     };
   }
 
+  handleScroll(scrollData){
+      console.log(scrollData);
+  }
+
   render() {
     let now = 60;
     return (
@@ -53,38 +60,63 @@ class Dashboard extends React.Component {
                              bgStyle={'danger'}/>
             </div>
             <div className="row">
-              <InfoBarChart theme={'bg-aqua'}
-                            icon={'fa-bookmark-o'}
-                            subject={'Bookmarks'}
-                            stats={'41,410'}
-                            content={'test'}
-                            progressPercent={70}
-                            progressDescription={'70% Increase in 30 Days'}
-                            progressColor={'white'}/>
-              <InfoBarChart theme={'bg-green'}
-                            icon={'fa-thumbs-o-up'}
-                            subject={'Likes'}
-                            stats={'41,410'}
-                            content={''}
-                            progressPercent={50}
-                            progressDescription={'50% Increase in 30 Days'}
-                            progressColor={'white'}/>
-              <InfoBarChart theme={'bg-yellow'}
-                            icon={'fa-calendar'}
-                            subject={'Events'}
-                            stats={'41,410'}
-                            content={''}
-                            progressPercent={70}
-                            progressDescription={'70% Increase in 30 Days'}
-                            progressColor={'white'}/>
-              <InfoBarChart theme={'bg-red'}
-                            icon={'fa-comments-o'}
-                            subject={'comments'}
-                            stats={'41,410'}
-                            content={''}
-                            progressPercent={70}
-                            progressDescription={'70% Increase in 30 Days'}
-                            progressColor={'white'}/>
+              <ScrollArea speed={0.8}
+                          className="area"
+                          contentClassName="content"
+                          smoothScrolling= {true}
+                          minScrollSize={40}
+                          onScroll={this.handleScroll}
+                          style={{height:400}}
+              >
+                <InfoBarChart theme={'bg-aqua'}
+                              icon={'fa-bookmark-o'}
+                              subject={'Bookmarks'}
+                              stats={'41,410'}
+                              content={'test'}
+                              progressPercent={70}
+                              progressDescription={'70% Increase in 30 Days'}
+                              progressColor={'white'}/>
+                <InfoBarChart theme={'bg-green'}
+                              icon={'fa-thumbs-o-up'}
+                              subject={'Likes'}
+                              stats={'41,410'}
+                              content={''}
+                              progressPercent={50}
+                              progressDescription={'50% Increase in 30 Days'}
+                              progressColor={'white'}/>
+                <InfoBarChart theme={'bg-yellow'}
+                              icon={'fa-calendar'}
+                              subject={'Events'}
+                              stats={'41,410'}
+                              content={''}
+                              progressPercent={70}
+                              progressDescription={'70% Increase in 30 Days'}
+                              progressColor={'white'}/>
+                <InfoBarChart theme={'bg-red'}
+                              icon={'fa-comments-o'}
+                              subject={'comments'}
+                              stats={'41,410'}
+                              content={''}
+                              progressPercent={70}
+                              progressDescription={'70% Increase in 30 Days'}
+                              progressColor={'white'}/>
+                <InfoBarChart theme={'bg-aqua'}
+                              icon={'fa-bookmark-o'}
+                              subject={'Bookmarks'}
+                              stats={'41,410'}
+                              content={'test'}
+                              progressPercent={70}
+                              progressDescription={'70% Increase in 30 Days'}
+                              progressColor={'white'}/>
+                <InfoBarChart theme={'bg-aqua'}
+                              icon={'fa-bookmark-o'}
+                              subject={'Bookmarks'}
+                              stats={'41,410'}
+                              content={'test'}
+                              progressPercent={70}
+                              progressDescription={'70% Increase in 30 Days'}
+                              progressColor={'white'}/>
+              </ScrollArea>
             </div>
           </div>
         </div>

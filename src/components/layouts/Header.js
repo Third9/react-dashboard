@@ -20,7 +20,7 @@ class Header extends React.Component {
     }
 
     let buttonStyle = {
-      marginLeft: '85%'
+      float: 'right'
     }
 
     return (

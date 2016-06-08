@@ -26,8 +26,15 @@ class DataSheet extends React.Component {
       showDetails: false,
       sortInfo: this.props.sortInfo,
       columns: this.handleColumns(),
-      dataSource: this.handleDataSource()
+      dataSource: this.handleDataSource(),
+      originData: null
     };
+  }
+
+  componentDidMount(){
+    this.setState({
+      originData: this.state.dataSource
+    })
   }
 
   handleColumns(){
@@ -62,14 +69,26 @@ class DataSheet extends React.Component {
   }
 
   sort(data) {
-      return sorty(this.state.sortInfo, data);
+      // return sorty(this.state.sortInfo, data);
+      let sortInfo = this.state.sortInfo
+      if(sortInfo.length==0){
+        // 해당 코드부분은 필터, 정렬과 연관이 있기에 상세하게 검토 필요.
+        return this.state.originData;
+      }
+      else if(sortInfo[0].dir==1){
+        return _.sortBy(data, sortInfo[0].name);
+      }else {
+        return _.sortBy(data, sortInfo[0].name).reverse();
+      }
   }
 
   handleSortChange(sortInfo) {
     this.state.sortInfo = sortInfo;
     let data = this.sort(this.state.dataSource);
 
-    this.setState({});
+    this.setState({
+      dataSource: data
+    });
   }
 
   handleColumnOrderChange(idx, dropIdx) {
@@ -81,7 +100,7 @@ class DataSheet extends React.Component {
   }
 
   handleFilter(column, value, allFilterValues) {
-    this.state.dataSource = this.insertData();
+    this.state.dataSource = this.props.dataSource;
 
     Object.keys(allFilterValues).forEach((name)=>{
       let columnFilter = (allFilterValues[name]+'').toUpperCase();

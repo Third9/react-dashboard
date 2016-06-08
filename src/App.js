@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Router, Route, Link, hashHistory, IndexRoute, withRouter} from 'react-router';
 
 import Header from './components/layouts/Header';
-import {Dashboard, Active, DetailPage, Total, Usim} from './components/pages';
+import {Dashboard, Total, Active, Inactive, Usim} from './components/pages';
 
 import {Auth, Login, Logout, requireAuth} from './components/commons/Auth/';
 
@@ -60,10 +60,10 @@ ReactDOM.render(
       <Route path="main" component={Dashboard} onEnter={requireAuth} />
       <Route path="login" component={wrapperLogin} />
       <Route path="logout" component={wrapperLogout} />
+      <Route path="main/total" component={Total} onEnter={requireAuth} />
       <Route path="main/active" component={Active} onEnter={requireAuth} />
-      <Route path="main/detail-page" component={DetailPage} />
-      <Route path="main/total" component={Total} />
-      <Route path="main/usim" component={Usim} />
+      <Route path="main/inactive" component={Inactive} onEnter={requireAuth} />
+      <Route path="main/usim" component={Usim} onEnter={requireAuth} />
     </Route>
   </Router>
   ,
