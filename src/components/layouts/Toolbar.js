@@ -7,6 +7,12 @@ import StatTile from '../external_modules/react-adminLTE/widgets/js/components/w
 
 class Toolbar extends React.Component {
   render() {
+    let toolButtonStyle = {
+        borderStyle: 'inset',
+        borderWidth: '10px',
+        borderRadius: '10px'
+    }
+
     return (
       <div className="row">
             <StatTile key={"rowThree1"}

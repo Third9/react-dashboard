@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {PageHeader, Button} from 'react-bootstrap';
+
 import {DataSheet} from '../../commons/DataSheet/';
 import {ExportFile} from '../../commons/FileFunction';
 
@@ -56,16 +58,25 @@ class Total extends React.Component {
   }
 
   render() {
+    let buttonStyle = {
+      float: 'right'
+    }
+
     return(
       <div>
-        <h2>Total</h2>
+        <div>
+          <h1>
+            Total
+            <ExportFile style={buttonStyle}
+                        data={this.state.dataSource}/>
+          </h1>
+        </div>
         <DataSheet onCellFunc={this.handleCellFunc}
                    sortInfo={this.state.sortInfo}
                    columns={this.state.columns}
                    dataSource={this.state.dataSource}
                    detailView={true}
         />
-        <ExportFile data={this.state.dataSource}/>
       </div>
     )
   }

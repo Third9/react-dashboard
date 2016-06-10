@@ -68,7 +68,7 @@ export class ExportFile extends React.Component {
   render() {
 
     return (
-      <div>
+      <div style={this.props.style}>
         <Button bsStyle={'primary'}
                 onClick={this.onShowModal}
         >
@@ -219,7 +219,7 @@ export class ImportFile extends React.Component {
 
   render() {
     return(
-      <div>
+      <div style={this.props.style}>
         <input type='file' onChange={this.loadDatas} />
       </div>
     )

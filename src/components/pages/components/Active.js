@@ -1,14 +1,14 @@
 import React from 'react';
 
 import {DataSheet} from '../../commons/DataSheet/';
-import {ImportFile} from '../../commons/FileFunction';
+import {ExportFile} from '../../commons/FileFunction';
 
 class Active extends React.Component {
   constructor(props) {
       super(props);
 
-      this.onLoadXLSX = this.onLoadXLSX.bind(this);
       this.insertData = this.insertData.bind(this);
+      this.handleCellFunc = this.handleCellFunc.bind(this);
 
       this.state = {
         columns: [
@@ -18,43 +18,63 @@ class Active extends React.Component {
           { name: 'city' },
           { name: 'email' }
         ],
-        sortInfo: [{name:'firstName', dir:'asc'}],
-        dataSource: []
+        sortInfo: [],
+        dataSource: this.insertData()
       }
   }
 
-  onLoadXLSX(value) {
-    this.setState({
-      dataSource: eval(value)
-    });
-
-  }
-
+  // 데이터 추가를 위한 용도. test
   insertData() {
-    let datas = [];
+    let datas = []
     for (let i=1; i<=10000; i++){
       datas.push({
         "index":i,
-        "firstName":"test",
-        "lastName":"Last"+i,
-        "city":"City"+i,
-        "email":"Email"+i
+        "firstName":`First${i}`,
+        "lastName":`Last${i}`,
+        "city":`City${i}`,
+        "email":`Email${i}`
       })
     }
-    return datas;
+
+    return datas
+    // let newData = update(this.state, {
+    //   _datas: {
+    //     $push: [{
+    //             "index":idx,
+    //             "firstName":"First"+idx,
+    //             "lastName":"Last"+idx,
+    //             "city":"City"+idx,
+    //             "email":"Email"+idx
+    //     }]
+    //   }
+    // });
+    //  this.setState(newData);
+  }
+
+  handleCellFunc(val) {
+      alert(val)
   }
 
   render() {
+    let buttonStyle = {
+      float: 'right'
+    }
+
     return(
       <div>
-        <h2>Active</h2>
-        {this.state.dataSource ? <DataSheet sortInfo={this.state.sortInfo}
+        <div>
+          <h1>
+            Active
+            <ExportFile style={buttonStyle}
+                        data={this.state.dataSource}/>
+          </h1>
+        </div>
+        <DataSheet onCellFunc={this.handleCellFunc}
+                   sortInfo={this.state.sortInfo}
                    columns={this.state.columns}
                    dataSource={this.state.dataSource}
-                   detailView={false}
-                  />
-                : null}
-        <ImportFile data={this.state.dataSource} onLoadXLSX={this.onLoadXLSX} />
+                   detailView={true}
+        />
       </div>
     )
   }

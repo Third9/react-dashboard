@@ -139,7 +139,10 @@ class DataSheet extends React.Component {
 
   render() {
 		return (
-        <div style={{display: '-webkit-box'}}>
+        <div style={{display: '-webkit-box',
+                     borderBottomStyle: 'groove',
+                     borderTopStyle: 'groove'
+                    }}>
           <DataGrid
       			idProperty='index'
       			dataSource={this.state.dataSource}
