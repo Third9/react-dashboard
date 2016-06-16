@@ -72,7 +72,7 @@ class DataSheet extends React.Component {
       // return sorty(this.state.sortInfo, data);
       let sortInfo = this.state.sortInfo
       if(sortInfo.length==0){
-        // 해당 코드부분은 필터, 정렬과 연관이 있기에 상세하게 검토 필요.
+        // sorting 하지 않는 경우에는 원본 데이터로 전환시켜줌
         return this.state.originData;
       }
       else if(sortInfo[0].dir==1){
@@ -100,7 +100,7 @@ class DataSheet extends React.Component {
   }
 
   handleFilter(column, value, allFilterValues) {
-    this.state.dataSource = this.props.dataSource;
+    let dataSource = this.props.dataSource;
 
     Object.keys(allFilterValues).forEach((name)=>{
       let columnFilter = (allFilterValues[name]+'').toUpperCase();
@@ -109,13 +109,17 @@ class DataSheet extends React.Component {
         return;
       }
 
-      this.state.dataSource = this.state.dataSource.filter((item)=>{
+      dataSource = dataSource.filter((item)=>{
         if((item[name]+'').toUpperCase().indexOf(columnFilter) === 0) {
           return true;
         }
       });
+      // this.state.originData
     });
-    this.setState({});
+    this.setState({
+      dataSource: dataSource,
+      originData: dataSource
+    });
   }
 
   onSelectionChange(newSelectedId, data) {
@@ -156,8 +160,10 @@ class DataSheet extends React.Component {
             onFilter={this.handleFilter}
             liveFilter={true}
   		    />
-        {this.state.showDetails ? <SelectedDetails idx={this.state.selectedId}/>
-                                                  : null}
+        {this.state.showDetails ? <SelectedDetails idx={this.state.selectedId}
+                                                   detailData={this.state.dataSource[this.state.selectedId-1]}
+                                  />
+                                  : null}
         </div>
     )
 	}}

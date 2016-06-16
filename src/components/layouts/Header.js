@@ -27,6 +27,7 @@ class Header extends React.Component {
       <div>
         <PageHeader style={headerStyle}>
           <Link to='/main'>
+            <i className="fa fa-tachometer"/>
             {this.state.pageTitle}
           </Link>
           {this.props.loggedIn ? (

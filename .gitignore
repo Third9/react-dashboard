@@ -3,6 +3,8 @@
 *.zip
 app.js
 *.csv
+*.xls
+*.xlsx
 
 #dir
 /node_modules

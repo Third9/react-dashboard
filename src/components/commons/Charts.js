@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Chart, {Line} from 'react-chartjs';
+import {Line} from 'react-chartjs';
 import {Label, ProgressBar} from 'react-bootstrap';
 
 import InfoTile from '../external_modules/react-adminLTE/widgets/js/components/widgets/info-tile/info-tile';
@@ -41,7 +41,7 @@ export class LineChart extends React.Component {
           //Boolean - Whether to animate the rotation of the chart
           animateRotate : true,
           //Boolean - Whether to animate scaling the chart from the centre
-          animateScale : false,
+          animateScale : true,
           //String - A legend template
           legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
         }
@@ -54,7 +54,7 @@ export class LineChart extends React.Component {
     let ChartData = {};
     let dataSets = [];
 
-    for (let loadData of loadDatas.groups) {
+    for (let loadData of loadDatas.datasets) {
       console.log(loadData)
       let colour = loadData.colour.join()
 
@@ -77,11 +77,11 @@ export class LineChart extends React.Component {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: loadData.datas
+        data: loadData.data
       })
     }
 
-    ChartData.labels = loadDatas.fields;
+    ChartData.labels = loadDatas.labels;
     ChartData.datasets = dataSets;
 
     return ChartData;
@@ -89,12 +89,20 @@ export class LineChart extends React.Component {
 
   render() {
     return(
-      <div>
-        <Line data={this.dataLoad()}
-              options={this.state.chartOptions}
-              width="600"
-              height="250"/>
+      <div class="chartWrapper" style={{position: "relative"}}>
+        <div class="chartAreaWrapper" style={{
+          width: "700px",
+          overflowX: "scroll"
+        }}>
+          <div style={{width:"3000px"}}>
+            <Line data={this.dataLoad()}
+                  options={this.state.chartOptions}
+                  width={this.props.width}
+                  height={this.props.height}
+                  />
+          </div>
       </div>
+    </div>
     )
   }
 }

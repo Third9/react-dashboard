@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {DataSheet} from '../../commons/DataSheet/';
-import {ImportFile} from '../../commons/FileFunction';
+import {ImportFile, ExportFile} from '../../commons/FileFunction';
 
 class Usim extends React.Component {
   constructor(props) {
@@ -12,14 +12,15 @@ class Usim extends React.Component {
 
       this.state = {
         columns: [
-          { name: 'index', title: '#', width: 50, type:'number' },
-          { name: 'firstName' },
-          { name: 'lastName'  },
-          { name: 'city' },
-          { name: 'email' }
+          { name: 'index', title: 'NO', width: 50, type:'number' },
+          { name: 'iccid', title: 'ICCID' },
+          { name: 'serial', title: 'Serial'  },
+          { name: 'name', title: 'Name' },
+          { name: 'post_pre', title: 'Post/Pre' },
+          { name: 'dataused', title: 'Data Used' }
         ],
-        sortInfo: [{name:'firstName', dir:'asc'}],
-        dataSource: []
+        sortInfo: [],
+        dataSource: this.insertData()
       }
   }
 
@@ -32,22 +33,30 @@ class Usim extends React.Component {
 
   insertData() {
     let datas = [];
-    for (let i=1; i<=10000; i++){
+    for (let i=1; i<=50; i++){
       datas.push({
         "index":i,
-        "firstName":"test",
-        "lastName":"Last"+i,
-        "city":"City"+i,
-        "email":"Email"+i
+        "iccid":`iccid${i}`,
+        "serial":`Last${i}`,
+        "name":`City${i}`,
+        "post_pre":`Email${i}`,
+        "dataused":`dataused${i}`
       })
     }
     return datas;
   }
 
   render() {
+    let buttonStyle = {
+      float: 'right'
+    }
+
     return(
       <div>
-        <h2>Usim</h2>
+        <h1>Usim
+          <ExportFile style={buttonStyle}
+                      data={this.state.dataSource}/>
+        </h1>
         {this.state.dataSource ? <DataSheet sortInfo={this.state.sortInfo}
                    columns={this.state.columns}
                    dataSource={this.state.dataSource}

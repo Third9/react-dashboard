@@ -12,11 +12,21 @@ class Active extends React.Component {
 
       this.state = {
         columns: [
-          { name: 'index', title: '#', width: 50, type:'number' },
-          { name: 'firstName' },
-          { name: 'lastName'  },
-          { name: 'city' },
-          { name: 'email' }
+          { name: 'index', title: 'NO', width: 100, type:'number' },
+          { name: 'active', title: 'Active'},
+          { name: 'serial', title: 'Serial'},
+          { name: 'imei', title: 'IMEI'},
+          { name: 'model', title: 'Model'},
+          { name: 'ip', title: 'IP'},
+          { name: 'network', title: 'Network'},
+          { name: 'antenna', title: 'Antenna'},
+          { name: 'battery', title: 'Battery'},
+          { name: 'carrier', title: 'Carrier'},
+          { name: 'data_usage', title: 'Data Usage'},
+          { name: 'limit_type', title: 'Limit Type'},
+          { name: 'qos', title: 'QoS'},
+          { name: 'tel_no', title: 'Tel No'},
+          { name: 'time_stamp', title: 'Time Stamp'},
         ],
         sortInfo: [],
         dataSource: this.insertData()
@@ -28,11 +38,21 @@ class Active extends React.Component {
     let datas = []
     for (let i=1; i<=10000; i++){
       datas.push({
-        "index":i,
-        "firstName":`First${i}`,
-        "lastName":`Last${i}`,
-        "city":`City${i}`,
-        "email":`Email${i}`
+        'index': i,
+        'active': `active${i}`,
+        'serial': `serial${i}`,
+        'imei': `imei${i}`,
+        'model': `model${i}`,
+        'ip': `ip${i}`,
+        'network': `network${i}`,
+        'antenna': `antenna${i}`,
+        'battery': `battery${i}`,
+        'carrier': `carrier${i}`,
+        'data_usage': `data_usage${i}`,
+        'limit_type': `limit_type${i}`,
+        'qos': `qos${i}`,
+        'tel_no': `tel_no${i}`,
+        'time_stamp': `time_stamp${i}`,
       })
     }
 
@@ -69,8 +89,7 @@ class Active extends React.Component {
                         data={this.state.dataSource}/>
           </h1>
         </div>
-        <DataSheet onCellFunc={this.handleCellFunc}
-                   sortInfo={this.state.sortInfo}
+        <DataSheet sortInfo={this.state.sortInfo}
                    columns={this.state.columns}
                    dataSource={this.state.dataSource}
                    detailView={true}

@@ -17,7 +17,7 @@ class Toolbar extends React.Component {
       <div className="row">
             <StatTile key={"rowThree1"}
                       width = {3}
-                      icon = {'fa-shopping-cart'}
+                      icon = {'fa-sitemap'}
                       link = {'#/main/total'}
                       stats = {'150'}
                       subject = {'Total'}
@@ -25,21 +25,21 @@ class Toolbar extends React.Component {
                       />
             <StatTile key={"rowThree2"}
                       width = {3}
-                      icon = {'ion-stats-bars'}
+                      icon = {'fa-wifi'}
                       link = {'#/main/active'}
                       stats = {'23'}
                       subject = {'Active'}
                       theme = {'bg-green'} />
             <StatTile key={"rowThree3"}
                       width = {3}
-                      icon = {'ion-person-add'}
+                      icon = {'fa-ban'}
                       link = {'#/main/inactive'}
                       stats = {'584'}
                       subject = {'Inactive'}
                       theme = {'bg-yellow'} />
             <StatTile key={"rowThree4"}
                       width = {3}
-                      icon = {'ion-pie-graph'}
+                      icon = {'fa-mobile'}
                       link = {'#/main/usim'}
                       stats = {'888728'}
                       subject = {'Usim'}

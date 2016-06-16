@@ -108,46 +108,6 @@ export class ImportFile extends React.Component {
     }
   }
 
-  // importXLS(evt) {
-  //   // let file = evt.target.files;
-  //   // let i, f;
-  //   // let jsonData = null;
-  //
-  //   for (i = 0, f = file[i]; i != file.length; ++i) {
-  //     let reader = new FileReader();
-  //     let name = f.name;
-  //     reader.onload = ((evt)=>{
-  //       let datas = evt.target.result;
-  //       let workbook = XLSX.read(datas, {type: 'binary'});
-  //
-  //       /* DO SOMETHING WITH workbook HERE */
-  //       console.log(workbook)
-  //       /*
-  //       정상적인 엑셀 파일의 경우 workbook으로 데이터 전달이 됨.
-  //       사용할 내용들은 시트네임, 시트내용들
-  //       SheetNames : 시트명
-  //       Sheets: 시트의 내용들
-  //       */
-  //       let sheetNameList = workbook.SheetNames;
-  //       sheetNameList.forEach((sheetName)=>{
-  //     		jsonData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-  //     		if(jsonData.length > 0){
-  //     			console.log(jsonData);
-  //           this.setState({
-  //             loadData: jsonData
-  //           });
-  //           console.log(`loadData : ${this.state.loadData}`)
-  //           this.props.onLoadXLSX(this.state.loadData)
-  //           // this.props.onLoadXLSX(roa)
-  //           // return roa
-  //     		}
-  //         // this.onLoadXLSX(roa);
-  //     	});
-  //     });
-  //     reader.readAsBinaryString(f);
-  //   }
-  // }
-
   loadDatas(evt) {
     let file = evt.target.files;
     let i, f;
