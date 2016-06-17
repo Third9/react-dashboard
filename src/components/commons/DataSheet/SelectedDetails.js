@@ -3,7 +3,6 @@ import React from 'react';
 import ScrollArea from 'react-scrollbar';
 import {Grid, Row, Col, FormGroup, ControlLabel, FormControl, ButtonToolbar, Button} from 'react-bootstrap';
 import {LineChart} from '../Charts'
-import Charts2 from '../Charts2'
 
 class SelectedDetails extends React.Component {
   constructor(props) {
@@ -11,16 +10,18 @@ class SelectedDetails extends React.Component {
 
     this.state = {
       index: this.props.idx,
-      lineData: {
-        labels: this.props.detailData.date_usage.date,
-        datasets: [
-            {
-              label: "mobileEco",
-              data: this.props.detailData.date_usage.val,
-              colour:[75,75,192]
-            }
-        ]
-      }
+      lineData: this.props.detailData.date_usage
+                  ? this.props.detailData.date_usage
+                  : {
+                      labels: [1,2,3,4,5,6,7,8,9,10],
+                      datasets: [
+                          {
+                            label: "mobileEco",
+                            data: [],
+                            colour:[75,75,192]
+                          }
+                        ]
+                    }
     }
   }
 
@@ -28,16 +29,7 @@ class SelectedDetails extends React.Component {
     if (JSON.stringify(this.Props) != JSON.stringify(nextProps)) {
       this.setState({
         index: nextProps.idx,
-        lineData: {
-          labels: nextProps.detailData.date_usage.date,
-          datasets: [
-              {
-                label: "mobileEco2",
-                data: nextProps.detailData.date_usage.val,
-                colour:[75,75,192]
-              }
-          ]
-        }
+        lineData: nextProps.detailData.date_usage
       })
 
       return true;
@@ -51,79 +43,110 @@ class SelectedDetails extends React.Component {
   }
 
   render() {
+    let styleGrid = {
+      paddingLeft:"3%",
+      paddingRight:"3%"
+    };
+
     let styleTitle = {
       marginLeft: "3%"
-    }
+    };
 
     let styleGraph = {
       width: "100%",
       marginLeft:"6%",
       marginRight:"auto"
-    }
+    };
 
     let styleLineChart = {
       // width: "600px",
       // overflowX: "scroll"
-    }
+    };
 
     let styleCol = {
+      height: "25px",
       border: "1px solid"
-    }
+    };
 
     let styleTextArea = {
       width: "100%"
-      // marginLeft:"4%"
-    }
+    };
 
     let styleToolbar = {
       marginLeft: "4%",
       marginBottom: "1%"
-    }
+    };
 
     let data = this.props.detailData;
+    let dynWidth = ()=>{
+      // 데이터양에 따라서 유동적인 width 표현의 위한 코드
+      let minWidth = 730; // Chart min size(px)
+      // 40000px 이상의 크기가 되면 화면출력이 정상적으로 안됨
+      let maxWidth = 30000; // Chart max size(px)
+      let cntLabel = this.state.lineData.labels.length;
+
+      if ((cntLabel*15) <= minWidth) {
+        return minWidth
+      } else if ((cntLabel*15) > maxWidth) {
+        return maxWidth + minWidth
+      } else {
+        return (cntLabel*15)+minWidth
+      }
+    };
+
     return(
       <div>
         <h2 style={styleTitle}>Details{this.state.index}</h2>
         <div className="row">
-          <Grid>
+          <Grid style={styleGrid}>
             <Row className="show-grid" >
-              <Col sm={3} md={3} smOffset={1} mdOffset={1} style={styleCol} >{data.network}</Col>
-              <Col sm={3} md={3}  style={styleCol} >{data.periodic_time}</Col>
+              <Col sm={4} md={4}  style={styleCol} >{data.network}</Col>
+              <Col sm={4} md={4}  style={styleCol} >{data.periodic_time}</Col>
             </Row>
             <Row className="show-grid" >
-              <Col sm={3} md={3} smOffset={1} mdOffset={1} style={styleCol} >{data.max_user}</Col>
-              <Col sm={3} md={3} style={styleCol} >{data.data_limit}</Col>
+              <Col sm={4} md={4} style={styleCol} >{data.max_user}</Col>
+              <Col sm={4} md={4} style={styleCol} >{data.data_limit}</Col>
             </Row>
             <Row className="show-grid" >
-              <Col sm={3} md={3} smOffset={1} mdOffset={1} style={styleCol} >{data.network_access}</Col>
-              <Col sm={3} md={3} style={styleCol} >URL Re-Direction</Col>
+              <Col sm={4} md={4} style={styleCol} >{data.network_access}</Col>
+              <Col sm={4} md={4} style={styleCol} >URL Re-Direction</Col>
             </Row>
             <Row className="show-grid" >
-              <Col sm={3} md={3} smOffset={1} mdOffset={1} style={styleCol} >{data.rental}</Col>
-              <Col sm={3} md={3} style={styleCol} >{data.data_usage}</Col>
+              <Col sm={4} md={4} style={styleCol} >{data.rental}</Col>
+              <Col sm={4} md={4} style={styleCol} >{data.data_usage}</Col>
             </Row>
             <Row className="show-grid" >
-              <Col sm={3} md={3} smOffset={1} mdOffset={1} style={styleCol} >Ad Redir</Col>
-              <Col sm={3} md={3} style={styleCol} >Network Band</Col>
+              <Col sm={4} md={4} style={styleCol} >Ad Redir</Col>
+              <Col sm={4} md={4} style={styleCol} >Network Band</Col>
             </Row>
           </Grid>
         </div>
         <div className="row">
-          <Grid style={{paddingLeft:"3%", paddingRight:"3%"}}>
+          <Grid style={styleGrid}>
             <Row className="show-grid" >
-              <Col sm={8} md={8} style={styleCol} >
-                <LineChart  data={this.state.lineData}
-                            width={3600}
-                            height={300}
-                />
+              <Col sm={8} md={8} >
+                <div class="chartWrapper" style={{position: "relative"}}>
+                  <div class="chartAreaWrapper" style={{
+                    width: "730px",
+                    minWidth: "730px",
+                    overflowX: "scroll"
+                  }}>
+                    <div style={{width:dynWidth()-730, minWidth: "730px"}}>
+                      <LineChart  data={this.state.lineData}
+                                  width={dynWidth()}
+                                  height={300}
+                      />
+                    </div>
+                  </div>
+                </div>
               </Col>
             </Row>
           </Grid>
         </div>
         <div className="row">
-          <Grid style={{paddingLeft:"3%", paddingRight:"3%"}}>
+          <Grid style={styleGrid}>
             <Row className="show-grid" >
-              <Col sm={8} md={8} style={styleCol} >
+              <Col sm={8} md={8} >
                 <FormGroup controlId="formControlsTextarea"
                            style={styleTextArea}
                 >
@@ -135,9 +158,9 @@ class SelectedDetails extends React.Component {
           </Grid>
         </div>
         <div className="row">
-          <Grid style={{paddingLeft:"3%", paddingRight:"3%"}}>
+          <Grid style={styleGrid}>
             <Row className="show-grid" >
-              <Col sm={8} md={8} style={styleCol} >
+              <Col sm={8} md={8} >
                 <ButtonToolbar>
                   <Button>Button1</Button>
                   <Button>Button2</Button>

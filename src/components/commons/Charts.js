@@ -64,17 +64,17 @@ export class LineChart extends React.Component {
         lineTension: 0.1,
         backgroundColor: "rgba("+colour+",0.4)",
         borderColor: "rgba("+colour+",1)",
-        borderCapStyle: 'butt',
+        // borderCapStyle: 'butt',
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: 'miter',
         pointBorderColor: "rgba("+colour+",1)",
         pointBackgroundColor: "#fff",
-        pointBorderWidth: 1,
+        pointBorderWidth: 0.1,
         pointHoverRadius: 5,
         pointHoverBackgroundColor: "rgba("+colour+",1)",
         pointHoverBorderColor: "rgba(220,220,220,1)",
-        pointHoverBorderWidth: 2,
+        pointHoverBorderWidth: 1,
         pointRadius: 1,
         pointHitRadius: 10,
         data: loadData.data
@@ -89,20 +89,11 @@ export class LineChart extends React.Component {
 
   render() {
     return(
-      <div class="chartWrapper" style={{position: "relative"}}>
-        <div class="chartAreaWrapper" style={{
-          width: "700px",
-          overflowX: "scroll"
-        }}>
-          <div style={{width:"3000px"}}>
-            <Line data={this.dataLoad()}
-                  options={this.state.chartOptions}
-                  width={this.props.width}
-                  height={this.props.height}
-                  />
-          </div>
-      </div>
-    </div>
+          <Line data={this.dataLoad()}
+                options={this.state.chartOptions}
+                width={this.props.width}
+                height={this.props.height}
+          />
     )
   }
 }

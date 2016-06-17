@@ -53,22 +53,54 @@ class Dashboard extends React.Component {
           progressColor:'white'
         }
       ],
+      progressCharts: [
+        {
+          title: 'label1',
+          ratio: 60,
+          bgStyle: 'success'
+        },
+        {
+          title: 'label2',
+          ratio: 23,
+          bgStyle: 'info'
+        },
+        {
+          title: 'label3',
+          ratio: 34,
+          bgStyle: 'warning'
+        },
+        {
+          title: 'label4',
+          ratio: 64,
+          bgStyle: 'danger'
+        },
+        {
+          title: 'label5',
+          ratio: 68,
+          bgStyle: 'warning'
+        },
+        {
+          title: 'label6',
+          ratio: 12,
+          bgStyle: 'success'
+        }
+      ],
       lineData: {
-        fields: ["January", "February", "March", "April", "May", "June", "July"],
-        groups: [
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
             {
               label: "data1",
-              datas: [65, 59, 80, 81, 56, 55, 40],
+              data: [65, 59, 80, 81, 56, 55, 40],
               colour:[75,192,192]
             },
             {
               label: "data2",
-              datas: [50, 84, 25, 45, 73, 91, 50],
+              data: [50, 84, 25, 45, 73, 91, 50],
               colour:[255,192,192]
             },
             {
               label: "data3",
-              datas: [20, 65, 45, 19, 41, 26, 40],
+              data: [20, 65, 45, 19, 41, 26, 40],
               colour:[75,75,192]
             }
         ]
@@ -102,36 +134,14 @@ class Dashboard extends React.Component {
                           onScroll={this.handleScroll}
                           style={{height:250, marginBottom:'15px'}}
               >
-                <ProgressChart title={'label1'}
-                               ratio={60}
-                               bgStyle={'success'}/>
-                <ProgressChart title={'label2'}
-                               ratio={20}
-                               bgStyle={'info'}/>
-                <ProgressChart title={'label3'}
-                               ratio={54}
-                               bgStyle={'warning'}/>
-                <ProgressChart title={'label4'}
-                               ratio={23}
-                               bgStyle={'danger'}/>
-                <ProgressChart title={'label5'}
-                               ratio={23}
-                               bgStyle={'danger'}/>
-                 <ProgressChart title={'label1'}
-                                ratio={60}
-                                bgStyle={'success'}/>
-                 <ProgressChart title={'label2'}
-                                ratio={20}
-                                bgStyle={'info'}/>
-                 <ProgressChart title={'label3'}
-                                ratio={54}
-                                bgStyle={'warning'}/>
-                 <ProgressChart title={'label4'}
-                                ratio={23}
-                                bgStyle={'danger'}/>
-                 <ProgressChart title={'label5'}
-                                ratio={23}
-                                bgStyle={'danger'}/>
+              {
+                this.state.progressCharts.map((progressChart, idx)=>{
+
+                  return (<ProgressChart title={progressChart.title}
+                                 ratio={progressChart.ratio}
+                                 bgStyle={progressChart.bgStyle}/>)
+                })
+              }
               </ScrollArea>
             </div>
             <div className="row">

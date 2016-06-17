@@ -84,11 +84,21 @@ class Total extends React.Component {
     // 일별 사용률의 데이터를 랜덤하게 만들어 주기 위한 테스트용 method
     let dates = [];
     let values = [];
-    for (let i=1; i<=1000; i++){
+    for (let i=1; i<=10; i++){
       dates.push(i)
       values.push(Math.floor(Math.random()*100))
     }
-    return {date: dates, val: values};
+
+    return {
+      labels: dates,
+      datasets: [
+          {
+            label: "mobileEco",
+            data: values,
+            colour:[75,75,192]
+          }
+      ]
+    };
   }
 
   handleCellFunc(val) {
