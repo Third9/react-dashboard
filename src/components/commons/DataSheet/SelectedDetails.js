@@ -30,6 +30,17 @@ class SelectedDetails extends React.Component {
       this.setState({
         index: nextProps.idx,
         lineData: nextProps.detailData.date_usage
+                    ? nextProps.detailData.date_usage
+                    : {
+                        labels: [1,2,3,4,5,6,7,8,9,10],
+                        datasets: [
+                            {
+                              label: "mobileEco",
+                              data: [],
+                              colour:[75,75,192]
+                            }
+                          ]
+                      }
       })
 
       return true;
@@ -49,18 +60,14 @@ class SelectedDetails extends React.Component {
     };
 
     let styleTitle = {
-      marginLeft: "3%"
+      marginTop: "0%",
+      marginLeft: "2%"
     };
 
     let styleGraph = {
       width: "100%",
       marginLeft:"6%",
       marginRight:"auto"
-    };
-
-    let styleLineChart = {
-      // width: "600px",
-      // overflowX: "scroll"
     };
 
     let styleCol = {

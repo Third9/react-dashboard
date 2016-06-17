@@ -1,4 +1,5 @@
 import React from 'react';
+import update from 'react-addons-update';
 
 import {DataSheet} from '../../commons/DataSheet/';
 import {ImportFile, ExportFile} from '../../commons/FileFunction';
@@ -25,10 +26,13 @@ class Usim extends React.Component {
   }
 
   onLoadXLSX(value) {
-    this.setState({
-      dataSource: eval(value)
+    let newState = update(this.state, {
+      dataSource: {
+        $push: eval(value)
+      }
     });
 
+    this.setState(newState);
   }
 
   insertData() {
@@ -53,7 +57,8 @@ class Usim extends React.Component {
 
     return(
       <div>
-        <h1>Usim
+        <h1 style={{marginTop:0}}>
+          Usim
           <ExportFile style={buttonStyle}
                       data={this.state.dataSource}/>
         </h1>
@@ -61,6 +66,7 @@ class Usim extends React.Component {
                    columns={this.state.columns}
                    dataSource={this.state.dataSource}
                    detailView={false}
+                   bottomSize={340}
                   />
                 : null}
         <ImportFile data={this.state.dataSource} onLoadXLSX={this.onLoadXLSX} />

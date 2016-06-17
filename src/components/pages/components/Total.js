@@ -113,7 +113,7 @@ class Total extends React.Component {
     return(
       <div>
         <div>
-          <h1>
+          <h1 style={{marginTop:0}}>
             Total
             <ExportFile style={buttonStyle}
                         data={this.state.dataSource}/>
@@ -123,6 +123,7 @@ class Total extends React.Component {
                    columns={this.state.columns}
                    dataSource={this.state.dataSource}
                    detailView={true}
+                   bottomSize={310}
         />
       </div>
     )

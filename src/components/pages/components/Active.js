@@ -83,7 +83,7 @@ class Active extends React.Component {
     return(
       <div>
         <div>
-          <h1>
+          <h1 style={{marginTop:0}}>
             Active
             <ExportFile style={buttonStyle}
                         data={this.state.dataSource}/>
@@ -93,6 +93,7 @@ class Active extends React.Component {
                    columns={this.state.columns}
                    dataSource={this.state.dataSource}
                    detailView={true}
+                   bottomSize={310}
         />
       </div>
     )

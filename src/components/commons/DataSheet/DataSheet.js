@@ -18,10 +18,12 @@ class DataSheet extends React.Component {
     this.onSelectionChange = this.onSelectionChange.bind(this);
     this.handleColumns = this.handleColumns.bind(this);
     this.handleDataSource = this.handleDataSource.bind(this);
+    this.handleResize = this.handleResize.bind(this);
 
     this.state = {
       onDetailView: this.props.detailView,
       width: '100%',
+      height: (window.innerHeight-this.props.bottomSize),
       selectedId: null,
       showDetails: false,
       sortInfo: this.props.sortInfo,
@@ -31,10 +33,27 @@ class DataSheet extends React.Component {
     };
   }
 
+  handleResize() {
+    console.log(`handleInnerSize: ${window.innerWidth} x ${window.innerHeight}`)
+    console.log(`handleResize: ${this.state.width} x ${this.state.height}`)
+    this.setState({
+      height: (window.innerHeight-this.props.bottomSize)
+    })
+  }
+
+  componentWillMount(){
+    this.handleResize();
+  }
+
   componentDidMount(){
+    window.addEventListener('resize', this.handleResize);
     this.setState({
       originData: this.state.dataSource
     })
+  }
+
+  componentWillUnmount() {
+    window.addEventListener('resize', this.handleResize);
   }
 
   handleColumns(){
@@ -44,7 +63,6 @@ class DataSheet extends React.Component {
     if(onCellFunc) {
         columns.splice(0,0, {name: 'button', width: 50});
     }
-
     return columns;
   }
 
@@ -69,7 +87,6 @@ class DataSheet extends React.Component {
   }
 
   sort(data) {
-      // return sorty(this.state.sortInfo, data);
       let sortInfo = this.state.sortInfo
       if(sortInfo.length==0){
         // sorting 하지 않는 경우에는 원본 데이터로 전환시켜줌
@@ -114,7 +131,6 @@ class DataSheet extends React.Component {
           return true;
         }
       });
-      // this.state.originData
     });
     this.setState({
       dataSource: dataSource,
@@ -145,13 +161,14 @@ class DataSheet extends React.Component {
 		return (
         <div style={{display: '-webkit-box',
                      borderBottomStyle: 'groove',
-                     borderTopStyle: 'groove'
-                    }}>
+                     borderTopStyle: 'groove',
+                     height:this.state.height
+                   }}>
           <DataGrid
       			idProperty='index'
       			dataSource={this.state.dataSource}
       			columns={this.state.columns}
-      			style={{height: 500, width: this.state.width}}
+      			style={{width: this.state.width}}
             selected={this.state.selectedId}
             onSelectionChange={this.onSelectionChange}
             sortInfo={this.state.sortInfo}

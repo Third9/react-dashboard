@@ -66,7 +66,6 @@ export class ExportFile extends React.Component {
   }
 
   render() {
-
     return (
       <div style={this.props.style}>
         <Button bsStyle={'primary'}
@@ -74,7 +73,10 @@ export class ExportFile extends React.Component {
         >
         Export
         </Button>
-
+        {/*
+          ===========================================================
+          Modal 화면
+        */}
         <Modal show={this.state.showModal} onHide={this.onCloseModal} >
           <Modal.Header closeButton>
             <Modal.Title>저장 경로 선택</Modal.Title>
@@ -120,32 +122,17 @@ export class ImportFile extends React.Component {
 
       reader.onload = ((evt)=>{
         let datas = evt.target.result;
-        let workbook = XLSX.read(datas, {type: 'binary'});
+        let workbook = null;
+
+        try {
+          workbook = XLSX.read(datas, {type: 'binary'});
+        } catch (error) {
+          console.error("File type error");
+          alert("Error for filetype")
+          return false;
+        }
 
         this._toJSON(workbook);
-        /* DO SOMETHING WITH workbook HERE */
-        // console.log(workbook)
-        /*
-        정상적인 엑셀 파일의 경우 workbook으로 데이터 전달이 됨.
-        사용할 내용들은 시트네임, 시트내용들
-        SheetNames : 시트명
-        Sheets: 시트의 내용들
-        */
-        // let sheetNameList = workbook.SheetNames;
-        // sheetNameList.forEach((sheetName)=>{
-      	// 	jsonData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-      	// 	if(jsonData.length > 0){
-      	// 		console.log(jsonData);
-        //     // this.setState({
-        //     //   loadData: jsonData
-        //     // });
-        //     // console.log(`loadData : ${this.state.loadData}`)
-        //     // this.props.onLoadXLSX(this.state.loadData)
-        //     // this.props.onLoadXLSX(roa)
-        //     // return roa
-      	// 	}
-        //   // this.onLoadXLSX(roa);
-      	// });
       });
 
     }
@@ -159,21 +146,9 @@ export class ImportFile extends React.Component {
     sheetNameList.forEach((sheetName)=>{
       jsonData = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
       if(jsonData.length > 0){
-        // console.log(`jsonData: ${jsonData}`);
-
         output = JSON.stringify(jsonData, 2, 2)
-        // console.log(`output: ${output}`);
-
         this.props.onLoadXLSX(output);
-        // this.setState({
-        //   loadData: jsonData
-        // });
-        // console.log(`loadData : ${this.state.loadData}`)
-        // this.props.onLoadXLSX(this.state.loadData)
-        // this.props.onLoadXLSX(roa)
-        // return roa
       }
-      // this.onLoadXLSX(roa);
     });
   }
 

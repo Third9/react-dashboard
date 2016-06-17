@@ -83,7 +83,7 @@ class Inactive extends React.Component {
     return(
       <div>
         <div>
-          <h1>
+          <h1 style={{marginTop:0}}>
             Inactive
             <ExportFile style={buttonStyle}
                         data={this.state.dataSource}/>
@@ -92,7 +92,8 @@ class Inactive extends React.Component {
         <DataSheet sortInfo={this.state.sortInfo}
                    columns={this.state.columns}
                    dataSource={this.state.dataSource}
-                   detailView={true}
+                   detailView={false}
+                   bottomSize={310}
         />
 
       </div>
