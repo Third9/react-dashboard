@@ -34,6 +34,7 @@
     "drag-helper": "^1.2.3",
     "json2csv": "^3.4.2",
     "nw": "^0.15.1",
+    "pouchdb": "^5.4.4",
     "react": "^15.0.2",
     "react-addons-update": "^15.0.2",
     "react-bootstrap": "^0.29.4",
@@ -42,7 +43,6 @@
     "react-dom": "^15.0.2",
     "react-router": "^2.4.0",
     "react-scrollbar": "^0.4.1",
-    "sorty": "^1.2.2",
     "underscore": "^1.8.3",
     "xlsx": "^0.8.0"
   }

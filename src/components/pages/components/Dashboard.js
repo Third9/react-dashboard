@@ -8,6 +8,7 @@ class Dashboard extends React.Component {
     super(props);
 
     this.handleScroll = this.handleScroll.bind(this);
+    this.Conn = this.props.route.fnc.Conn;
 
     this.state = {
       infoDatas: [

@@ -4,8 +4,11 @@ import {Router, Route, Link, hashHistory, IndexRoute, withRouter} from 'react-ro
 
 import Header from './components/layouts/Header';
 import {Dashboard, Total, Active, Inactive, Usim} from './components/pages';
-
 import {Auth, Login, Logout, requireAuth} from './components/commons/Auth/';
+import Conn from './components/commons/ConnDB/Conn';
+
+// pouchDB
+let conn = new Conn('temp');
 
 class App extends React.Component {
   constructor(props) {
@@ -32,7 +35,7 @@ class App extends React.Component {
   }
 }
 
-class wrapperLogin extends React.Component {
+class WrapperLogin extends React.Component {
   render() {
     return(
       <Login Auth={Auth} parent={this.props}/>
@@ -40,9 +43,9 @@ class wrapperLogin extends React.Component {
   }
 }
 // wrapperLogin에서 Router 객체를 사용하기 위한 선언
-wrapperLogin = withRouter(wrapperLogin);
+WrapperLogin = withRouter(WrapperLogin);
 
-class wrapperLogout extends React.Component {
+class WrapperLogout extends React.Component {
   render() {
     return(
       <Logout Auth={Auth} parent={this.props}/>
@@ -50,20 +53,59 @@ class wrapperLogout extends React.Component {
   }
 }
 // wrapperLogout에서 Router 객체를 사용하기 위한 선언
-wrapperLogout = withRouter(wrapperLogout);
+WrapperLogout = withRouter(WrapperLogout);
 
+class WrapperDashboard extends React.Component {
+  render() {
+    return(
+      <Dashboard conn={conn} />
+    )
+  }
+}
+
+class WrapperTotal extends React.Component {
+  render() {
+    return(
+      <Total conn={conn} />
+    )
+  }
+}
+
+class WrapperActive extends React.Component {
+  render() {
+    return(
+      <Active conn={conn} />
+    )
+  }
+}
+
+class WrapperInactive extends React.Component {
+  render() {
+    return(
+      <Inactive conn={conn} />
+    )
+  }
+}
+
+class WrapperUsim extends React.Component {
+  render() {
+    return(
+      <Usim conn={conn} />
+    )
+  }
+}
 
 ReactDOM.render(
   <Router history={hashHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Dashboard} onEnter={requireAuth} />
-      <Route path="main" component={Dashboard} onEnter={requireAuth} />
-      <Route path="login" component={wrapperLogin} />
-      <Route path="logout" component={wrapperLogout} />
-      <Route path="main/total" component={Total} onEnter={requireAuth} />
-      <Route path="main/active" component={Active} onEnter={requireAuth} />
-      <Route path="main/inactive" component={Inactive} onEnter={requireAuth} />
-      <Route path="main/usim" component={Usim} onEnter={requireAuth} />
+      <IndexRoute component={WrapperDashboard} onEnter={requireAuth} />
+      <Route path="main" component={WrapperDashboard} onEnter={requireAuth} />
+      <Route path="login" component={WrapperLogin} />
+      <Route path="logout" component={WrapperLogout} />
+      <Route path="main/total" component={WrapperTotal} onEnter={requireAuth} />
+      <Route path="main/active" component={WrapperActive} onEnter={requireAuth} />
+      <Route path="main/inactive" component={WrapperInactive} onEnter={requireAuth} />
+      <Route path="main/usim" component={WrapperUsim} onEnter={requireAuth} />
     </Route>
   </Router>
   ,

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import _ from 'underscore';
+
 import {PageHeader, Button} from 'react-bootstrap';
 
 import {DataSheet} from '../../commons/DataSheet/';
@@ -12,6 +14,8 @@ class Total extends React.Component {
       this.insertData = this.insertData.bind(this);
       this.handleCellFunc = this.handleCellFunc.bind(this);
       this.randData = this.randData.bind(this);
+      this.updateState = this.updateState.bind(this);
+      this.Conn = this.props.conn;
 
       this.state = {
         columns: [
@@ -32,40 +36,43 @@ class Total extends React.Component {
           { name: 'time_stamp', title: 'Time Stamp'},
         ],
         sortInfo: [],
-        dataSource: this.insertData()
+        dataSource: []
       }
   }
 
   // 데이터 추가를 위한 용도. test
   insertData() {
-    let datas = []
-    for (let i=1; i<=10000; i++){
-      datas.push({
-        'index': i,
-        'active': `active${i}`,
-        'serial': `serial${i}`,
-        'imei': `imei${i}`,
-        'model': `model${i}`,
-        'ip': `ip${i}`,
-        'network': `network${i}`,
-        'antenna': `antenna${i}`,
-        'battery': `battery${i}`,
-        'carrier': `carrier${i}`,
-        'data_usage': `data_usage${i}`,
-        'limit_type': `limit_type${i}`,
-        'qos': `qos${i}`,
-        'tel_no': `tel_no${i}`,
-        'time_stamp': `time_stamp${i}`,
-        'periodic_time': `periodic_time${i}`,
-        'max_user': `max_user${i}`,
-        'data_limit': `data_limit${i}`,
-        'network_access': `network_access${i}`,
-        'rental': `rental${i}`,
-        'date_usage': this.randData()
-      })
+    for (let i=1; i<=1; i++){
+      let docu = {
+        _id: new Date().toISOString(),
+        index: i,
+        active: `active${i}`,
+        serial: `serial${i}`,
+        imei: `imei${i}`,
+        model: `model${i}`,
+        ip: `ip${i}`,
+        network: `network${i}`,
+        antenna: `antenna${i}`,
+        battery: `battery${i}`,
+        carrier: `carrier${i}`,
+        data_usage: `data_usage${i}`,
+        limit_type: `limit_type${i}`,
+        qos: `qos${i}`,
+        tel_no: `tel_no${i}`,
+        time_stamp: `time_stamp${i}`,
+        periodic_time: `periodic_time${i}`,
+        max_user: `max_user${i}`,
+        data_limit: `data_limit${i}`,
+        network_access: `network_access${i}`,
+        rental: `rental${i}`,
+        date_usage: this.randData()
+      }
+
+      console.log(`insertData : ${docu}`)
+      this.Conn.handleCreateUpdateDocu(docu)
     }
 
-    return datas
+    // return datas
     // let newData = update(this.state, {
     //   _datas: {
     //     $push: [{
@@ -78,6 +85,21 @@ class Total extends React.Component {
     //   }
     // });
     //  this.setState(newData);
+  }
+
+  // componentWillMount() {
+  //   // this.insertData();
+  // }
+
+  updateState(err, doc) {
+    console.log('updateState')
+    this.setState({
+      dataSource: _.map(doc.rows, function(row) {return row.doc; })
+    });
+  }
+
+  componentDidMount() {
+    this.Conn.showDocu(this.updateState)
   }
 
   randData() {

@@ -3,7 +3,6 @@ import update from 'react-addons-update';
 import _ from 'underscore';
 
 import DataGrid from 'react-datagrid';
-import sorty from 'sorty';
 
 import SelectedDetails from './SelectedDetails';
 

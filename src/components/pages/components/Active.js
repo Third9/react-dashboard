@@ -1,5 +1,7 @@
 import React from 'react';
 
+import _ from 'underscore';
+
 import {DataSheet} from '../../commons/DataSheet/';
 import {ExportFile} from '../../commons/FileFunction';
 
@@ -9,6 +11,9 @@ class Active extends React.Component {
 
       this.insertData = this.insertData.bind(this);
       this.handleCellFunc = this.handleCellFunc.bind(this);
+      this.updateState = this.updateState.bind(this);
+
+      this.Conn = this.props.conn;
 
       this.state = {
         columns: [
@@ -29,7 +34,7 @@ class Active extends React.Component {
           { name: 'time_stamp', title: 'Time Stamp'},
         ],
         sortInfo: [],
-        dataSource: this.insertData()
+        dataSource: []
       }
   }
 
@@ -69,6 +74,17 @@ class Active extends React.Component {
     //   }
     // });
     //  this.setState(newData);
+  }
+
+  updateState(err, doc) {
+    console.log('updateState')
+    this.setState({
+      dataSource: _.map(doc.rows, function(row) {return row.doc; })
+    });
+  }
+
+  componentDidMount() {
+    this.Conn.showDocu(this.updateState)
   }
 
   handleCellFunc(val) {
