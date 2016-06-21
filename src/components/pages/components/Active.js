@@ -12,7 +12,6 @@ class Active extends React.Component {
       this.insertData = this.insertData.bind(this);
       this.handleCellFunc = this.handleCellFunc.bind(this);
       this.updateState = this.updateState.bind(this);
-
       this.Conn = this.props.conn;
 
       this.state = {

@@ -13,9 +13,12 @@ class Total extends React.Component {
 
       this.insertData = this.insertData.bind(this);
       this.handleCellFunc = this.handleCellFunc.bind(this);
-      this.randData = this.randData.bind(this);
       this.updateState = this.updateState.bind(this);
       this.Conn = this.props.conn;
+
+      // test를 위한 임시값 생성 func
+      this.randData = this.randData.bind(this);
+      this.randActive = this.randActive.bind(this);
 
       this.state = {
         columns: [
@@ -42,11 +45,11 @@ class Total extends React.Component {
 
   // 데이터 추가를 위한 용도. test
   insertData() {
-    for (let i=1; i<=1; i++){
+    for (let i=1; i<=500; i++){
       let docu = {
         _id: new Date().toISOString(),
         index: i,
-        active: `active${i}`,
+        active: this.randActive(),
         serial: `serial${i}`,
         imei: `imei${i}`,
         model: `model${i}`,
@@ -68,8 +71,9 @@ class Total extends React.Component {
         date_usage: this.randData()
       }
 
-      console.log(`insertData : ${docu}`)
-      this.Conn.handleCreateUpdateDocu(docu)
+      console.log(`insertData : ${docu.index}`)
+      setTimeout(this.Conn.handleCreateUpdateDocu(docu), 1000*2)
+
     }
 
     // return datas
@@ -87,9 +91,10 @@ class Total extends React.Component {
     //  this.setState(newData);
   }
 
-  // componentWillMount() {
-  //   // this.insertData();
-  // }
+  componentWillMount() {
+    // this.Conn.handleDestroy();
+    // this.insertData();
+  }
 
   updateState(err, doc) {
     console.log('updateState')
@@ -99,7 +104,18 @@ class Total extends React.Component {
   }
 
   componentDidMount() {
+    // this.insertData();
     this.Conn.showDocu(this.updateState)
+  }
+
+  randActive() {
+    let stat = 'active'
+    if ((Math.floor(Math.random()*10)%2) == 0) {
+      stat = 'active'
+    } else {
+      stat = 'inactive'
+    }
+    return stat;
   }
 
   randData() {
